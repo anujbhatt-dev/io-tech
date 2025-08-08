@@ -5,6 +5,6 @@ export default async function SetviceSlugPage({params}:{params:Promise<{serviceS
 
 
   return (
-    <div>SetviceSlugPage {serviceSlug}</div>
+    <div className='mt-[4rem]'>SetviceSlugPage {serviceSlug}</div>
   )
 }

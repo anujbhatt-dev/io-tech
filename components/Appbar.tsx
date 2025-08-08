@@ -1,5 +1,4 @@
 'use client';
-
 import { NavItems, NavItemsType } from '@/utils/data';
 import {Link} from '@/i18n/navigation';
 import React, { useState } from 'react';
@@ -12,7 +11,6 @@ import {
   IconX,
   IconWorld,
   IconPalette,
-  IconSearch
 } from '@tabler/icons-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import SearchBar from './SearchBar';

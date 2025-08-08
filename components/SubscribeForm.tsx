@@ -49,7 +49,7 @@ export default function SubscribeForm() {
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        <Form className='flex justify-between items-center relative lg:w-[20rem] bg-black dark:bg-white brown:bg-white dark:text-black rounded-lg flex-wrap'>
+        <Form className='flex justify-between items-center relative w-[20rem] bg-black dark:bg-white brown:bg-white dark:text-black rounded-lg flex-wrap'>
           <div>
             <Field
               name='email'

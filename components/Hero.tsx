@@ -81,7 +81,7 @@ export default function Hero() {
             src={slides[current].bgImageUrl}
             alt=""
           />
-          <div className="flex justify-between items-center gap-x-50 flex-col lg:flex-row text-center lg:text-left">
+          <div className="flex justify-between items-center gap-x-2 flex-col lg:flex-row text-center lg:text-left">
             <div className="max-w-xl">
               <h3 className="text-2xl lg:text-5xl font-bold mb-4 lg:mb-8">{slides[current].heading}</h3>
               <p className="text-sm lg:text-xl mb-4 lg:mb-16 leading-relaxed">{slides[current].subHeading}</p>
@@ -93,7 +93,7 @@ export default function Hero() {
               </Link>
             </div>
 
-            <div className="mt-12 lg:mt-0">
+            <div className="mt-12 lg:mt-0 flex-no-shrink">
               <Image
                 width={1080}
                 height={916}
