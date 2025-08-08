@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
 import subscribeReducer from "./slices/subscribeSlice"
+import themeReducer from "./slices/themeSlice"
 
 export const store = configureStore({
   reducer: {
     subscribe: subscribeReducer,
+    theme: themeReducer,
   },
 })
 

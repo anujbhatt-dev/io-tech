@@ -1,16 +1,29 @@
 "use client"
+
 import { dm_sans } from '@/utils/fonts'
 import React, { ReactNode } from 'react'
 import Appbar from './Appbar'
+import {NextIntlClientProvider} from 'next-intl';
 
-export default function Providers(
-    {children}:{children:ReactNode}
-) {
+// ✅ Redux setup
+import { Provider as ReduxProvider } from 'react-redux'
+import { store } from '@/store/store'
+import ThemeInitializer from './ThemeInitializer'
+import Footer from './Footer'
 
+
+export default function Providers({ children,locale }: { children: ReactNode, locale:string }) {
   return (
-    <div className={`${dm_sans.className}`}>
-        <Appbar/> 
+    <ReduxProvider store={store}>
+      <NextIntlClientProvider locale={locale}>
+      <ThemeInitializer>
+      <div className={dm_sans.className}>
+        <Appbar  locale={locale}/>
         {children}
-    </div>
+        <Footer/>
+      </div>
+      </ThemeInitializer>
+      </NextIntlClientProvider>
+    </ReduxProvider>
   )
 }
