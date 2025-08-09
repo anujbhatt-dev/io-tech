@@ -29,7 +29,7 @@ export default function Appbar({locale}:{locale:string}) {
   return (
     <div className='w-full z-50 fixed top-0 bg-white dark:bg-black brown:bg-[#4e2618] text-black dark:text-white brown:text-white px-6 lg:px-20 h-[4rem] flex justify-between items-center'>
       {/* Logo */}
-      <div className='text-lg font-bold'>LOGO</div>
+      <Link href={"/"} className='text-lg font-bold'>LOGO</Link>
 
       {/* Desktop Menu */}
       <div className='hidden lg:flex gap-x-8 items-center relative'>
@@ -60,7 +60,7 @@ export default function Appbar({locale}:{locale:string}) {
               className='fixed top-[4rem] left-0 right-0 mx-20 p-10 grid grid-cols-4 gap-4  bg-white dark:bg-black brown:bg-[#4e2618] rounded-b-3xl z-10 border-t border-black/10 dark:border-white/10'
             >
               {NavItems[2].dropdownItems?.map((dropdownItem, i) => (
-                <Link key={dropdownItem.text + i} href={dropdownItem.href || '/'}>
+                <Link onClick={()=>setIsServicesOpen(false)}  key={dropdownItem.text + i} href={dropdownItem.href || '/'}>
                   {dropdownItem.text}
                 </Link>
               ))}
