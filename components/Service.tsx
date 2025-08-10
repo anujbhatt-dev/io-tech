@@ -74,7 +74,7 @@ export default function Service({ data, locale }: { data : any, locale:"en"|"ar"
                 <div>
                   <IconSquareFilled className="text-[#4B2615] h-[1rem] w-[1rem] sm:h-4 sm:w-4 mt-1 flex-no-shrink" />
                 </div>
-                <div className="text-[#1E1E1E] text-sm sm:text-base lg:text-lg text-right">
+                <div className="text-[#1E1E1E] text-sm sm:text-base lg:text-lg">
                 {children}
                 </div>
               </blockquote>
