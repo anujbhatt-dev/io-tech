@@ -57,11 +57,11 @@ export default function TestimonialsSlide({ testimonialsData }: { testimonialsDa
           transition={{ duration: 0.4 }}
           className="grid grid-cols-1 md:grid-cols-3 gap-x-8 lg:my-10 "
         >
-          <div className="mt-2 md:mt-0 flex-shrink-0 flex lg:justify-center ">
+          <div className="mt-2 md:mt-0 flex lg:justify-center items-center mx-auto">
             <Image
               width={1080}
               height={916}
-              className="object-cover h-auto w-full md:h-[25rem] md:w-[25rem] mx-auto"
+              className="object-cover h-[20rem] w-[20rem]  md:h-[25rem] md:w-[25rem] mx-auto"
               src={`${strapiMediaUrl}${testimonialsData[index].imageUrl.url}`}
               alt={testimonialsData[index].imageUrl.alternativeText || ""}
             />
