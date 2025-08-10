@@ -1,5 +1,5 @@
 'use client';
-import { fetchGlobalData, NavItems, NavItemsType, strapiMediaUrl } from '@/utils/data';
+import { fetchAllServicesData, fetchGlobalData, NavItems, NavItemsType, strapiMediaUrl } from '@/utils/data';
 import {Link} from '@/i18n/navigation';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -33,6 +33,11 @@ export interface NavItemSchema {
   }[]
 }
 
+interface linkSchema {
+  slug:string
+  label:string
+}
+
 export default function Appbar({locale}:{locale:'en' | 'ar'}) {
   const dispatch = useDispatch();
   const theme = useSelector((state: RootState) => state.theme.mode);
@@ -45,23 +50,26 @@ export default function Appbar({locale}:{locale:'en' | 'ar'}) {
   const [navItems,setNavItems] = useState<NavItemSchema[] | null>(null)
   const [loading,setLoading] = useState(true)
   const t = useTranslations("Appbar")
+  const [allItems,setAllItems] = useState<linkSchema[] | null>(null)
 
   const themes = ['light', 'dark', 'brown'] as const;
 
   useEffect(()=>{
       const fetchAppbarData = async () => {
         const data = (await fetchGlobalData({locale})).appBar;
+        const allService = await fetchAllServicesData({locale});
         setLogo(data.logo)
         setNavItems(data.navItems)
-        
+        setAllItems(allService)
         setLoading(false)
       }
+
 
       fetchAppbarData()
   },[])
 
 
-  if(loading || !navItems) return null
+  if(loading || !navItems || !allItems) return null
 
   return (
     <div className='w-full z-50 fixed top-0 bg-white dark:bg-black brown:bg-[#4e2618] text-black dark:text-white brown:text-white px-6 lg:px-20 h-[4rem] flex justify-between items-center'>
@@ -98,8 +106,8 @@ export default function Appbar({locale}:{locale:'en' | 'ar'}) {
               exit={{ opacity: 0, y: -10 }}
               className='fixed top-[4rem] left-0 right-0 mx-20 p-10 grid grid-cols-4 gap-4  bg-white dark:bg-black brown:bg-[#4e2618] rounded-b-3xl z-10 border-t border-black/10 dark:border-white/10'
             >
-              {NavItems[2].dropdownItems?.map((dropdownItem, i) => (
-                <Link onClick={()=>setIsServicesOpen(false)}  key={dropdownItem.label + i} href={dropdownItem.href || '/'}>
+              {allItems.map((dropdownItem, i) => (
+                <Link onClick={()=>setIsServicesOpen(false)}  key={dropdownItem.label + i} href={("/services/"+dropdownItem.slug) || '/'}>
                   {dropdownItem.label}
                 </Link>
               ))}
@@ -265,15 +273,15 @@ export default function Appbar({locale}:{locale:'en' | 'ar'}) {
             {/* Nav Items */}
             {navItems.map((navItem, i) =>
               navItem.type === "LINK" ? (
-                <Link key={navItem.label + i} href={navItem.href || '/'} onClick={() => setIsMobileMenuOpen(false)}>
+                <Link key={navItem.label + i} href={(navItem.href) || '/'} onClick={() => setIsMobileMenuOpen(false)}>
                   {navItem.label}
                 </Link>
               ) : (
                 <div key={navItem.label + i}>
                   <div className='font-semibold'>{navItem.label}</div>
                   <div className='pl-6 flex flex-col gap-2 mt-2 opacity-70'>
-                    {NavItems[2].dropdownItems?.map((item, j) => (
-                      <Link key={item.label + j} href={item.href || '/'} onClick={() => setIsMobileMenuOpen(false)}>
+                    {allItems.map((item, j) => (
+                      <Link key={item.label + j} href={("/services/"+item.slug) || '/'} onClick={() => setIsMobileMenuOpen(false)}>
                         {item.label}
                       </Link>
                     ))}

@@ -22,11 +22,11 @@ export default function Search({data,locale}:{data:any, locale:"en" | "ar" }) {
       </div>
       <div className="">
         {data.map((item:any,i:number)=>(
-          <div className="text-[#4B2615] my-10 border-b-2 border-black/10 pb-10">
+          <div className="text-[#4B2615] my-10 border-b-2 border-black/10 pb-10" key={item.slug+i}>
           <p>
           {item.label}
           </p>
-          <Link className="underline cursor-pointer"  href={"/services/"+item.slug} key={item.slug+i}>
+          <Link className="underline cursor-pointer"  href={"/services/"+item.slug} >
              {locale=="ar"?"اقرأ المزيد":"Read More"}
              
           </Link>
