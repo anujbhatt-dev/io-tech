@@ -61,7 +61,7 @@ export default function TestimonialsSlide({ testimonialsData }: { testimonialsDa
             <Image
               width={1080}
               height={916}
-              className="object-cover h-auto w-full md:h-[25rem] md:w-[25rem]"
+              className="object-cover h-auto w-full md:h-[25rem] md:w-[25rem] mx-auto"
               src={`${strapiMediaUrl}${testimonialsData[index].imageUrl.url}`}
               alt={testimonialsData[index].imageUrl.alternativeText || ""}
             />
@@ -78,11 +78,11 @@ export default function TestimonialsSlide({ testimonialsData }: { testimonialsDa
         <button
             onClick={prevTestimonial}
             className="
-            bg-black/80 dark:bg-white/80 brown:bg-[#74402d] 
+            bg-[#74402d] dark:bg-white/80 brown:bg-[#74402d] 
             text-white dark:text-black brown:text-white 
             p-2 lg:p-4 rounded-full shadow
             transition 
-            hover:bg-black/60 dark:hover:bg-white/60 brown:hover:bg-[#96573f]
+            hover:bg-[#96573f] dark:hover:bg-white/60 brown:hover:bg-[#96573f]
             hover:scale-110
             ease-in-out duration-300
             "

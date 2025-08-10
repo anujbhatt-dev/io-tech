@@ -47,33 +47,33 @@ export default function SubscribeForm({locale}:{locale:"en"|"ar"}) {
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        <Form className='flex justify-between items-center relative lg:w-[20rem] bg-black dark:bg-white brown:bg-white dark:text-black rounded-lg flex-wrap'>
+        <Form className='flex justify-between items-center relative bg-[#4e2618] dark:bg-white brown:bg-white dark:text-black rounded-lg flex-wrap '>
           <div>
             <Field
               name='email'
               type='email'
               placeholder={locale==="en"?'Enter your email':"أدخل بريدك الإلكتروني"}
-              className='text-white dark:text-black brown:text-black w-full px-4 py-4 placeholder:text-neutral-400'
+              className='text-white dark:text-black brown:text-black w-full px-4 py-4 placeholder:text-white placeholder:dark:text-neutral-400 placeholder:brown:text-neutral-400'
             />
+          </div>
             <ErrorMessage
               name='email'
               component='div'
-              className='text-sm text-red-600 mt-1 px-4'
+              className='text-sm text-red-600 mt-1 px-4 absolute top-[100%]'
             />
-          </div>
 
           <button
             type='submit'
-            className='font-medium py-2 px-4 rounded transition bg-white dark:bg-black brown:bg-[#4e2618] text-black dark:text-white brown:text-white mr-2'
+            className='font-medium py-2 px-4 rounded transition bg-white/50 dark:bg-black brown:bg-[#4e2618] text-black dark:text-white brown:text-white mr-2'
           >
-            Subscribe
+            {locale=="en"?"Subscribe":"يشترك"}
           </button>
 
           {successMessage && (
-              <div className='text-green-600 text-sm text-center px-4'>{successMessage}</div>
+              <div className='text-green-600 text-sm text-center px-4 absolute top-[100%]'>{successMessage}</div>
             )}
           {errorMessage && (
-              <div className='text-red-600 text-sm text-center px-4'>{errorMessage}</div>
+              <div className='text-red-600 text-sm text-center px-4 absolute top-[100%]'>{errorMessage}</div>
             )}
         </Form>
       </Formik>
