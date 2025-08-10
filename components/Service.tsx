@@ -4,7 +4,7 @@ import { IconArrowLeft, IconSquareFilled } from "@tabler/icons-react";
 import React from "react";
 import { BlocksRenderer, type BlocksContent } from '@strapi/blocks-react-renderer';
 
-export default function Service({ data }: { data : any }) {
+export default function Service({ data, locale }: { data : any, locale:"en"|"ar" }) {
     const router = useRouter();
   return (
     <div className="relative min-h-screen px-4 sm:px-8 lg:px-20 xl:px-40 my-[4rem] leading-relaxed">
@@ -51,7 +51,7 @@ export default function Service({ data }: { data : any }) {
                   </h3>
                 );
               }
-              return <p>{children}</p>;
+              return <p className="text-base sm:text-lg font-semibold text-[#4B2615] mt-4 mb-2">{children}</p>;
             },
             paragraph: ({ children }) => (
               <p className="text-[#1E1E1E] my-6 sm:my-8 text-sm sm:text-base lg:text-lg text-justify">
@@ -65,14 +65,16 @@ export default function Service({ data }: { data : any }) {
               return <ul className="list-disc ml-6 space-y-2 lg:pl-5">{children}</ul>;
             },
             "list-item": ({ children }) => (
-              <li className="text-[#1E1E1E]/70 flex-1 max-w-3xl text-sm sm:text-base">
+              <li className="text-[#1E1E1E]/70 flex-1 text-sm sm:text-base">
                 {children}
               </li>
             ),
             quote: ({ children }) => (
-              <blockquote className="flex items-start gap-x-2 border-l-4 border-black/30 pl-4 sm:pl-6 my-4">
-                <IconSquareFilled className="text-[#4B2615] h-[1rem] w-[1rem] sm:h-4 sm:w-4 mt-1 flex-no-shrink" />
+              <blockquote className={`${locale==="ar"?" border-r-4 border-black/30  pr-4 sm:pr-6 items-end":" border-l-4 border-black/30 pl-4 sm:pl-6 items-start"} flex gap-x-2  my-4 bg-neutral-300`}>
                 <div>
+                  <IconSquareFilled className="text-[#4B2615] h-[1rem] w-[1rem] sm:h-4 sm:w-4 mt-1 flex-no-shrink" />
+                </div>
+                <div className="text-[#1E1E1E] text-sm sm:text-base lg:text-lg text-right">
                 {children}
                 </div>
               </blockquote>

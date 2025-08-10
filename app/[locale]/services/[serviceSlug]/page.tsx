@@ -10,6 +10,6 @@ export default async function SetviceSlugPage({params,locale}:{params:Promise<{s
   if(!serviceData) return null
 
   return (
-    <Service data={serviceData}/>
+    <Service locale={locale} data={serviceData}/>
   )
 }
