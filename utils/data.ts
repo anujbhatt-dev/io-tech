@@ -58,6 +58,19 @@ export const fetchServiceData = async ({serviceSlug,locale="en"}:{serviceSlug:st
   }
 }
 
+export const fetchSearchData = async ({v,locale="en"}:{v:string,locale:"ar" | "en"}) =>{
+  try {
+    const query =`${strapiUrl}/services?locale=${locale}&filters[slug][$contains]=${v}`
+    const res = await fetch(query) 
+    const data = await res.json(); 
+    console.log(query, data.data);
+    
+    return data.data;
+  } catch (error) {
+    console.log(error);      
+  }
+}
+
 
 export enum NavItemsType {
     LINK,

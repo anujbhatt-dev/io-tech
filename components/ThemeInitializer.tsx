@@ -9,7 +9,7 @@ export default function ThemeInitializer({ children }: { children: React.ReactNo
   const [isThemeLoaded, setIsThemeLoaded] = useState(false);
 
   useEffect(() => {
-    const savedTheme = (localStorage.getItem('theme') || 'light') as ThemeType;
+    const savedTheme = (localStorage.getItem('theme') || 'brown') as ThemeType;
 
     // Apply class and update redux state
     dispatch(setTheme(savedTheme));
