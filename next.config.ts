@@ -3,7 +3,16 @@ import createNextIntlPlugin from 'next-intl/plugin';
  
 const nextConfig: NextConfig = {
     images:{
-        remotePatterns: [new URL('http://localhost:1337/**')],
+        remotePatterns: [
+            {
+                protocol: "http",
+                hostname: "**",
+              },
+              {
+                protocol: "https",
+                hostname: "**",
+              },
+          ],
     },
     eslint:{
         ignoreDuringBuilds: true,

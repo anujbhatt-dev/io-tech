@@ -27,7 +27,6 @@ export const fetchTeamSectionData = async ({locale="en"}:{locale:"ar" | "en"}) =
   try {
     const res = await fetch(`${strapiUrl}/team?locale=${locale}&populate[teamSection][populate][teamMembers][populate][imageUrl][fields][0]=alternativeText&populate[teamSection][populate][teamMembers][populate][imageUrl][fields][1]=url`) 
     const data = await res.json();
-    console.dir(data.data, {depth:null});
     
     return data.data.teamSection
   } catch (error) {
@@ -39,7 +38,6 @@ export const fetchTestimonialSectionData = async ({locale="en"}:{locale:"ar" | "
   try {
     const res = await fetch(`${strapiUrl}/testimonial?locale=${locale}&populate[testimonialSection][populate][testimonialItems][populate][imageUrl][fields][0]=alternativeText&populate[testimonialSection][populate][testimonialItems][populate][imageUrl][fields][1]=url`) 
     const data = await res.json();
-    console.dir(data.data, {depth:null});
     
     return data.data.testimonialSection
   } catch (error) {
