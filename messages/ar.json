@@ -1,9 +1,16 @@
 {
-    "landing": {
-      "hero": {
-        "heading": "مرحبًا بك في منصتنا",
-        "sub-heading": "نمكّن رحلتك بحلول مبتكرة."
-      }
+    "Appbar": {
+      "theme": {
+        "label":"موضوع",
+        "light": "فاتح",
+        "dark": "داكن",
+        "brown": "بني"
+      },
+      "lang": {
+        "en": "en",
+        "ar": "العربية"
+      },
+      "searchPlaceholder":"بحث"
     }
   }
   

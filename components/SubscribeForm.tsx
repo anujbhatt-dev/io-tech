@@ -4,7 +4,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useState } from 'react';
 
-export default function SubscribeForm() {
+export default function SubscribeForm({locale}:{locale:"en"|"ar"}) {
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -17,7 +17,7 @@ export default function SubscribeForm() {
       .email('Invalid email address')
       .required('Email is required'),
   });
-
+  
   const handleSubmit = async (values: typeof initialValues, { resetForm }: any) => {
     setSuccessMessage('');
     setErrorMessage('');
@@ -54,7 +54,7 @@ export default function SubscribeForm() {
             <Field
               name='email'
               type='email'
-              placeholder='Enter your email'
+              placeholder={locale==="en"?'Enter your email':"أدخل بريدك الإلكتروني"}
               className='text-white dark:text-black brown:text-black w-full px-4 py-4 placeholder:text-neutral-400'
             />
             <ErrorMessage

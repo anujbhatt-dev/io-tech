@@ -12,15 +12,16 @@ import ThemeInitializer from './ThemeInitializer'
 import Footer from './Footer'
 
 
-export default function Providers({ children,locale }: { children: ReactNode, locale:string }) {
+export default function Providers({ children,locale,messages }: { children: ReactNode, locale:'en' | 'ar',messages:any }) {
+  
   return (
     <ReduxProvider store={store}>
-      <NextIntlClientProvider locale={locale}>
+      <NextIntlClientProvider locale={locale} messages={messages}>
       <ThemeInitializer>
       <div className={dm_sans.className}>
-        <Appbar  locale={locale}/>
+        <Appbar locale={locale}/>
         {children}
-        <Footer/>
+        <Footer locale={locale}/>
       </div>
       </ThemeInitializer>
       </NextIntlClientProvider>

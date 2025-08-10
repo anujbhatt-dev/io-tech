@@ -6,10 +6,12 @@ import { useEffect, useState } from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTranslations } from 'next-intl';
 
 export default function SearchBar() {
   const [isSearchOpen, setIsSearchOpen] = useState(true);
   const router = useRouter();
+  const t =useTranslations("Appbar");
 
   const SearchSchema = Yup.object().shape({
     query: Yup.string().min(1, 'Too Short!').required('Search is required'),
@@ -54,7 +56,7 @@ export default function SearchBar() {
                     <Field
                       name="query"
                       type="text"
-                      placeholder="Search..."
+                      placeholder={`${t("searchPlaceholder")}...`}
                       autoComplete="off"
                       className="w-full bg-transparent outline-none text-sm text-black dark:text-white brown:text-white"
                       onBlur={() => setTimeout(() => setIsSearchOpen(false), 200)} // Close on blur with slight delay

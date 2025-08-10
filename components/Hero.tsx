@@ -2,48 +2,23 @@
 
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
-import HeroBg from '@/public/hero-bg.jpg';
 import { Link } from '@/i18n/navigation';
 import { IconChevronCompactLeft } from '@tabler/icons-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { HeroSlideSchema } from '@/types';
+import { strapiMediaUrl, strapiUrl } from '@/utils/data';
 
-const slides = [
-  {
-    href: '/',
-    bgImageUrl: '/hero-bg.jpg',
-    imageUrl: '',
-    heading: 'Slide One',
-    subHeading:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio asperiores nulla sequi cupiditate delectus consequuntur voluptatum voluptates provident! Eius, cumque.',
-    linkText: 'Read More',
-  },
-  {
-    href: '/',
-    bgImageUrl: '/hero-bg.jpg',
-    imageUrl: '',
-    heading: 'Slide Two',
-    subHeading:
-      'Consequatur voluptatum voluptates provident! Eius, cumque. Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-    linkText: 'Read More',
-  },
-  {
-    href: '/',
-    bgImageUrl: '/hero-bg.jpg',
-    imageUrl: '',
-    heading: 'Slide Three',
-    subHeading:
-      'Cupiditate delectus consequuntur voluptatum voluptates provident! Eius, cumque.',
-    linkText: 'Read More',
-  },
-];
 
-export default function Hero() {
+
+
+export default function Hero({locale,slides}:{locale:"en"|"ar",slides:HeroSlideSchema[]}) {
   const [current, setCurrent] = useState(0);
 
   // Auto slide
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrent((prev) => (prev + 1) % slides.length);
+      
     }, 6000);
     return () => clearInterval(interval);
   }, []);
@@ -78,10 +53,10 @@ export default function Hero() {
             width={1080}
             height={916}
             className="object-cover h-full absolute top-0 left-0 right-0 bottom-0 w-full opacity-30 -z-1"
-            src={slides[current].bgImageUrl}
+            src={`${strapiMediaUrl}${slides[current].bgImageUrl.url}`}
             alt=""
           />
-          <div className="flex justify-between items-center gap-x-2 flex-col lg:flex-row text-center lg:text-left">
+          <div className={`flex justify-between items-center gap-x-4 flex-col  ${locale=="ar" ?"lg:flex-row-reverse": "lg:flex-row"}`}>
             <div className="max-w-xl">
               <h3 className="text-2xl lg:text-5xl font-bold mb-4 lg:mb-8">{slides[current].heading}</h3>
               <p className="text-sm lg:text-xl mb-4 lg:mb-16 leading-relaxed">{slides[current].subHeading}</p>
@@ -98,7 +73,7 @@ export default function Hero() {
                 width={1080}
                 height={916}
                 className="object-cover h-[15rem] w-[15rem] lg:h-[25rem] lg:w-[25rem]"
-                src={slides[current].bgImageUrl}
+                src={`${strapiMediaUrl}${slides[current].imageUrl.url}`}
                 alt=""
               />
             </div>

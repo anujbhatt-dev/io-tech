@@ -1,115 +1,164 @@
 import { getTranslations } from "next-intl/server";
+export const strapiUrl = process.env.NEXT_PUBLIC_STRAPI_URL || "http://localhost:1337/api"
+export const strapiMediaUrl = process.env.NEXT_PUBLIC_STRAPI_MEDIA_URL || "http://localhost:1337"
+
+export const fetchGlobalData = async ({locale="en"}:{locale:"ar" | "en"}) =>{
+    try {
+      const res = await fetch(`${strapiUrl}/global?locale=${locale}`) 
+      const data = await res.json();
+      return data.data    
+    } catch (error) {
+      console.log(error);      
+    }
+}
+
+export const fetchHeroData = async ({locale="en"}:{locale:"ar" | "en"}) =>{
+  try {
+    const res = await fetch(`${strapiUrl}/hero-slider?locale=${locale}&populate[heroSlider][populate][bgImageUrl][fields][0]=alternativeText&populate[heroSlider][populate][bgImageUrl][fields][1]=url&populate[heroSlider][populate][imageUrl][fields][0]=alternativeText&populate[heroSlider][populate][imageUrl][fields][1]=url`) 
+    const data = await res.json();
+    
+    return data.data.heroSlider
+  } catch (error) {
+    console.log(error);      
+  }
+}
+
+export const fetchTeamSectionData = async ({locale="en"}:{locale:"ar" | "en"}) =>{
+  try {
+    const res = await fetch(`${strapiUrl}/team?locale=${locale}&populate[teamSection][populate][teamMembers][populate][imageUrl][fields][0]=alternativeText&populate[teamSection][populate][teamMembers][populate][imageUrl][fields][1]=url`) 
+    const data = await res.json();
+    console.dir(data.data, {depth:null});
+    
+    return data.data.teamSection
+  } catch (error) {
+    console.log(error);      
+  }
+}
+
+export const fetchTestimonialSectionData = async ({locale="en"}:{locale:"ar" | "en"}) =>{
+  try {
+    const res = await fetch(`${strapiUrl}/testimonial?locale=${locale}&populate[testimonialSection][populate][testimonialItems][populate][imageUrl][fields][0]=alternativeText&populate[testimonialSection][populate][testimonialItems][populate][imageUrl][fields][1]=url`) 
+    const data = await res.json();
+    console.dir(data.data, {depth:null});
+    
+    return data.data.testimonialSection
+  } catch (error) {
+    console.log(error);      
+  }
+}
 
 
 export enum NavItemsType {
     LINK,
     DROPDOWN
 }
+
+
 export const NavItems = [
     {
       type: NavItemsType.LINK,
-      text: "About Us",
+      label: "About Us",
       href: "/about-us",
     },
     {
       type: NavItemsType.LINK,
-      text: "Our Team",
+      label: "Our Team",
       href: "/our-team",
     },
     {
       type: NavItemsType.DROPDOWN,
-      text: "Services",
+      label: "Services",
       dropdownItems: [
         {
-          text: "Legal Consultancy Services",
+          label: "Legal Consultancy Services",
           href: "/services/legal-consultancy-services",
         },
         {
-          text: "Foreign Investment Service",
+          label: "Foreign Investment Service",
           href: "/services/foreign-investment-service",
         },
         {
-          text: "Contracts",
+          label: "Contracts",
           href: "/services/contracts",
         },
         {
-          text: "Notarization",
+          label: "Notarization",
           href: "/services/notarization",
         },
         {
-          text: "Insurance",
+          label: "Insurance",
           href: "/services/insurance",
         },
         {
-          text: "Defense",
+          label: "Defense",
           href: "/services/defense",
         },
         {
-          text: "Bank",
+          label: "Bank",
           href: "/services/bank",
         },
         {
-          text: "Corporate Government Service",
+          label: "Corporate Government Service",
           href: "/services/corporate-government-service",
         },
         {
-          text: "Companies Liquidation",
+          label: "Companies Liquidation",
           href: "/services/companies-liquidation",
         },
         {
-          text: "Internal Regulations for Companies",
+          label: "Internal Regulations for Companies",
           href: "/services/internal-regulations",
         },
         {
-            text: "Legal Consultancy Services",
+            label: "Legal Consultancy Services",
             href: "/services/legal-consultancy-services",
           },
           {
-            text: "Foreign Investment Service",
+            label: "Foreign Investment Service",
             href: "/services/foreign-investment-service",
           },
           {
-            text: "Contracts",
+            label: "Contracts",
             href: "/services/contracts",
           },
           {
-            text: "Notarization",
+            label: "Notarization",
             href: "/services/notarization",
           },
           {
-            text: "Insurance",
+            label: "Insurance",
             href: "/services/insurance",
           },
           {
-            text: "Defense",
+            label: "Defense",
             href: "/services/defense",
           },
           {
-            text: "Bank",
+            label: "Bank",
             href: "/services/bank",
           },
           {
-            text: "Corporate Government Service",
+            label: "Corporate Government Service",
             href: "/services/corporate-government-service",
           },
           {
-            text: "Companies Liquidation",
+            label: "Companies Liquidation",
             href: "/services/companies-liquidation",
           },
           {
-            text: "Internal Regulations for Companies",
+            label: "Internal Regulations for Companies",
             href: "/services/internal-regulations",
           },
       ],
     },
     {
       type: NavItemsType.LINK,
-      text: "Blog",
+      label: "Blog",
       href: "/blog",
     },
     {
       type: NavItemsType.LINK,
-      text: "Contact Us",
+      label: "Contact Us",
       href: "/contact-us",
     },
   ];

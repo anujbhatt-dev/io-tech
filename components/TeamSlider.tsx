@@ -1,5 +1,6 @@
 "use client"
 
+import { strapiMediaUrl } from '@/utils/data'
 import { IconBrandWhatsapp, IconMail, IconPhone, IconChevronCompactLeft, IconChevronCompactRight } from '@tabler/icons-react'
 import Image from 'next/image'
 import React, { useRef, useState, useEffect } from 'react'
@@ -7,10 +8,13 @@ import React, { useRef, useState, useEffect } from 'react'
 type Member = {
   name: string
   position: string
-  wharsapp: string
+  whatsapp: string
   phone: string
   email: string
-  imageUrl: string
+  imageUrl: {
+    alternativeText:string,
+    url:string
+  }
 }
 
 export default function TeamSlider({ members }: { members: Member[] }) {
@@ -85,7 +89,7 @@ export default function TeamSlider({ members }: { members: Member[] }) {
         {/* slider */}
         <div
           ref={scrollRef}
-          className="flex justify-start gap-0 items-center overflow-x-auto scroll-smooth no-scrollbar "
+          className="flex justify-start gap-0 items-start overflow-x-auto scroll-smooth no-scrollbar "
           style={{ scrollSnapType: 'x mandatory' }}
         >
           {members.map((member, i) => (
@@ -102,7 +106,7 @@ export default function TeamSlider({ members }: { members: Member[] }) {
                 width={1080}
                 height={916}
                 className="w-full h-[15rem] object-cover origin-top"
-                src={member.imageUrl}
+                src={`${strapiMediaUrl}${member.imageUrl.url}`}
                 alt=""
               />
               <p className="py-3 pb-2 font-bold text-xl">{member.name}</p>

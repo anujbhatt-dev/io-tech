@@ -26,7 +26,7 @@ export default async function RootLayout({
   params
 }: {
   children: React.ReactNode;
-  params: Promise<{locale: string}>;
+  params: Promise<{locale: 'en' | 'ar'}>;
 }) {
 
   const {locale} = await params;
@@ -34,14 +34,17 @@ export default async function RootLayout({
     notFound();
   }
 
+  // Load translation messages for the selected locale
+  const messages = (await import(`@/messages/${locale}.json`)).default;
+
 
 
   return (
-    <html className="dark" lang={locale} suppressHydrationWarning>
+    <html className="dark" lang={locale} dir={locale=="ar"?"rlt":"ltr"} suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased  ${locale==="ar" && "text-right"}`}
       >
-        <Providers locale={locale}>
+        <Providers locale={locale} messages={messages}>
           {children}
         </Providers>
       </body>

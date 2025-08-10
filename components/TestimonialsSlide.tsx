@@ -4,14 +4,18 @@ import Image from "next/image"
 import React, { useState } from "react"
 import { IconArrowLeft, IconArrowRight } from "@tabler/icons-react"
 import { motion, AnimatePresence } from "framer-motion"
+import { strapiMediaUrl } from "@/utils/data"
 
 type Testimonial = {
-  imageUrl: string
+  imageUrl: {
+    alternativeText:string,
+    url:string
+  },
   testimony: string
   name: string
 }
 
-export default function TestimonialsSlide({ testimonialsData }: { testimonialsData: Testimonial[] }) {
+export default function TestimonialsSlide({ testimonialsData }: { testimonialsData: Testimonial[], locale:"en" | "ar" }) {
   const [index, setIndex] = useState(0)
   const [direction, setDirection] = useState<1 | -1>(1) // 1 for right, -1 for left
 
@@ -51,15 +55,15 @@ export default function TestimonialsSlide({ testimonialsData }: { testimonialsDa
           animate="center"
           exit="exit"
           transition={{ duration: 0.4 }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-x-8 lg:my-10"
+          className="grid grid-cols-1 md:grid-cols-3 gap-x-8 lg:my-10 "
         >
-          <div className="mt-2 md:mt-0 flex-shrink-0 flex lg:justify-center">
+          <div className="mt-2 md:mt-0 flex-shrink-0 flex lg:justify-center ">
             <Image
               width={1080}
               height={916}
               className="object-cover h-auto w-full md:h-[25rem] md:w-[25rem]"
-              src={testimonialsData[index].imageUrl}
-              alt={testimonialsData[index].name}
+              src={`${strapiMediaUrl}${testimonialsData[index].imageUrl.url}`}
+              alt={testimonialsData[index].imageUrl.alternativeText || ""}
             />
           </div>
           <div className="col-span-2 flex flex-col justify-start mt-6 md:mt-0">

@@ -10,7 +10,7 @@ export default function Service({ data }: { data: any }) {
       {/* Background image */}
       <div className="absolute inset-0 bg-[url(/service-bg.png)] bg-no-repeat bg-fixed bg-cover opacity-5"></div>
 
-      <div className="mx-auto text-justify relative z-10">
+      <div className="mx-auto relative z-10">
         {/* Back Button */}
         <button
           onClick={() => router.back()}
@@ -25,7 +25,7 @@ export default function Service({ data }: { data: any }) {
         </h1>
 
         {/* Intro Paragraph */}
-        <p className="text-[#1E1E1E] my-6 sm:my-8 text-sm sm:text-base lg:text-lg">
+        <p className="text-[#1E1E1E] my-6 sm:my-8 text-sm sm:text-base lg:text-lg text-justify">
           Law Firm is one of the leading legal offices that offer exceptional
           advisory services for both individuals and companies. Our mission is
           to provide comprehensive and specialized legal support to meet our

@@ -1,7 +1,7 @@
 'use client';
-import { NavItems, NavItemsType } from '@/utils/data';
+import { fetchGlobalData, NavItems, NavItemsType, strapiMediaUrl } from '@/utils/data';
 import {Link} from '@/i18n/navigation';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setTheme } from '@/store/slices/themeSlice';
 import { RootState } from '@/store/store';
@@ -14,37 +14,76 @@ import {
 } from '@tabler/icons-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import SearchBar from './SearchBar';
+import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 
-export default function Appbar({locale}:{locale:string}) {
+export interface NavItemSchema {
+  href: string;
+  id: number;
+  isButtonLink: boolean;
+  isExternal: boolean;
+  label: string;
+  type: "LINK" | "DROPDOWN"; // adjust as needed
+  dropdownItems?:{
+    href: string;
+    id: number;
+    isButtonLink: boolean;
+    isExternal: boolean;
+    label: string;
+  }[]
+}
+
+export default function Appbar({locale}:{locale:'en' | 'ar'}) {
   const dispatch = useDispatch();
   const theme = useSelector((state: RootState) => state.theme.mode);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isThemeDropdownOpen, setIsThemeDropdownOpen] = useState(false);
   const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false);
-  const [language, setLanguage] = useState<'en' | 'ar'>('en');
+  const [language, setLanguage] = useState<'en' | 'ar'>(locale);
+  const [logo,setLogo] = useState<any>()
+  const [navItems,setNavItems] = useState<NavItemSchema[] | null>(null)
+  const [loading,setLoading] = useState(true)
+  const t = useTranslations("Appbar")
 
   const themes = ['light', 'dark', 'brown'] as const;
+
+  useEffect(()=>{
+      const fetchAppbarData = async () => {
+        const data = (await fetchGlobalData({locale})).appBar;
+        setLogo(data.logo)
+        setNavItems(data.navItems)
+        
+        setLoading(false)
+      }
+
+      fetchAppbarData()
+  },[])
+
+
+  if(loading || !navItems) return null
 
   return (
     <div className='w-full z-50 fixed top-0 bg-white dark:bg-black brown:bg-[#4e2618] text-black dark:text-white brown:text-white px-6 lg:px-20 h-[4rem] flex justify-between items-center'>
       {/* Logo */}
-      <Link href={"/"} className='text-lg font-bold'>LOGO</Link>
+      <Link href={logo.href} className='text-lg font-bold'>
+          <Image className='h-[3.5rem] w-auto' width={200} height={100} alt='' src={`${strapiMediaUrl}${logo.image.url}`} />
+      </Link>
 
       {/* Desktop Menu */}
       <div className='hidden lg:flex gap-x-8 items-center relative'>
-        {NavItems.map((navItem, i) =>
-          navItem.type === NavItemsType.LINK ? (
-            <Link className='cursor-pointer' key={navItem.text + i} href={navItem.href || '/'}>
-              {navItem.text}
+        {navItems.map((navItem, i) =>
+          navItem.type === "LINK" ? (
+            <Link className='cursor-pointer' key={navItem.label + i} href={navItem.href || '/'}>
+              {navItem.label}
             </Link>
           ) : (
             <div
               className='cursor-pointer flex items-center gap-1'
               onClick={() => setIsServicesOpen(!isServicesOpen)}
-              key={navItem.text + i}
+              key={navItem.label + i}
             >
-              {navItem.text}
+              {navItem.label}
               <IconChevronDown className={`transition-transform ${isServicesOpen ? 'rotate-180' : ''}`} />
             </div>
           )
@@ -60,8 +99,8 @@ export default function Appbar({locale}:{locale:string}) {
               className='fixed top-[4rem] left-0 right-0 mx-20 p-10 grid grid-cols-4 gap-4  bg-white dark:bg-black brown:bg-[#4e2618] rounded-b-3xl z-10 border-t border-black/10 dark:border-white/10'
             >
               {NavItems[2].dropdownItems?.map((dropdownItem, i) => (
-                <Link onClick={()=>setIsServicesOpen(false)}  key={dropdownItem.text + i} href={dropdownItem.href || '/'}>
-                  {dropdownItem.text}
+                <Link onClick={()=>setIsServicesOpen(false)}  key={dropdownItem.label + i} href={dropdownItem.href || '/'}>
+                  {dropdownItem.label}
                 </Link>
               ))}
             </motion.div>
@@ -81,7 +120,7 @@ export default function Appbar({locale}:{locale:string}) {
             className='flex items-center gap-1 px-2 py-1 bg-white dark:bg-black brown:bg-[#4e2618] rounded text-sm'
           >
             <IconPalette size={16} />
-            Theme
+            {t("theme.label")}
             <IconChevronDown size={16} className={`${isThemeDropdownOpen ? 'rotate-180' : ''} transition-transform`} />
           </button>
 
@@ -93,18 +132,18 @@ export default function Appbar({locale}:{locale:string}) {
                 exit={{ opacity: 0, y: -10 }}
                 className='absolute right-0 mt-2 bg-white dark:bg-black brown:bg-[#4e2618] border border-black/10 dark:border-white/10 brown:border-black/50 p-2 rounded shadow-lg flex flex-col gap-1 z-10'
               >
-                {themes.map((t) => (
+                {themes.map((th) => (
                   <button
-                    key={t}
+                    key={th}
                     className={`px-3 py-1 rounded hover:bg-neutral-200 dark:hover:bg-neutral-800 text-center hover:text-black dark:hover:text-white ${
-                      theme === t ? 'bg-zinc-700 brown:bg-[#74402d] text-white' : ''
+                      theme === th ? 'bg-zinc-700 brown:bg-[#74402d] text-white' : ''
                     }`}
                     onClick={() => {
-                      dispatch(setTheme(t));
+                      dispatch(setTheme(th));
                       setIsThemeDropdownOpen(false);
                     }}
                   >
-                    {t[0].toUpperCase() + t.slice(1)}
+                    {t("theme."+th)}
                   </button>
                 ))}
               </motion.div>
@@ -119,7 +158,7 @@ export default function Appbar({locale}:{locale:string}) {
             className='flex items-center gap-1 px-2 py-1 bg-white dark:bg-black brown:bg-[#4e2618] rounded text-sm'
           >
             <IconWorld size={16} />
-            {language.toUpperCase()}
+            {language=="en"?"EN":"العربية"}
             <IconChevronDown size={16} className={`${isLanguageDropdownOpen ? 'rotate-180' : ''} transition-transform`} />
           </button>
 
@@ -140,7 +179,7 @@ export default function Appbar({locale}:{locale:string}) {
                       locale === lang ? 'bg-zinc-700 brown:bg-[#74402d] text-white' : ''
                     }`}                    
                   >
-                    {lang.toUpperCase()}
+                    {t("lang."+lang)}
                   </Link>
                 ))}
               </motion.div>
@@ -179,20 +218,20 @@ export default function Appbar({locale}:{locale:string}) {
            <div className='flex flex-col gap-2'>
               <span className='font-semibold flex items-center gap-2'>
                 <IconPalette size={18} />
-                Theme
+                {t("theme.label")}
               </span>
-              {themes.map((t) => (
+              {themes.map((th) => (
                 <button
-                  key={t}
+                  key={th}
                   className={`pl-6 px-3 py-1 rounded hover:bg-neutral-200 dark:hover:bg-neutral-800 ${
-                    theme === t ? 'bg-zinc-700 brown:bg-[#74402d] text-white' : ''
+                    theme === th ? 'bg-zinc-700 brown:bg-[#74402d] text-white' : ''
                   }`}
                   onClick={() => {
-                    dispatch(setTheme(t));
+                    dispatch(setTheme(th));
                     setIsMobileMenuOpen(false);
                   }}
                 >
-                  {t[0].toUpperCase() + t.slice(1)}
+                  {t("theme."+th)}
                 </button>
               ))}
             </div>
@@ -201,10 +240,12 @@ export default function Appbar({locale}:{locale:string}) {
             <div className='flex flex-col gap-2 mt-4'>
               <span className='font-semibold flex items-center gap-2'>
                 <IconWorld size={18} />
-                Language
+                {language=="en"?"Language":"لغة"}
               </span>
               {['en', 'ar'].map((lang) => (
-                <button
+                <Link
+                  href={"/"}
+                  locale={lang}
                   key={lang}
                   className={`pl-6 px-3 py-1 rounded hover:bg-neutral-200 dark:hover:bg-neutral-800 ${
                     language === lang ? 'bg-zinc-700 brown:bg-[#74402d] text-white' : ''
@@ -214,26 +255,26 @@ export default function Appbar({locale}:{locale:string}) {
                     setIsMobileMenuOpen(false);
                   }}
                 >
-                  {lang.toUpperCase()}
-                </button>
+                  {t("lang."+lang)}
+                </Link>
               ))}
             </div>
 
             {/* Divider */}
             <hr className='border-t border-neutral-300/50 dark:border-neutral-700' />           
             {/* Nav Items */}
-            {NavItems.map((navItem, i) =>
-              navItem.type === NavItemsType.LINK ? (
-                <Link key={navItem.text + i} href={navItem.href || '/'} onClick={() => setIsMobileMenuOpen(false)}>
-                  {navItem.text}
+            {navItems.map((navItem, i) =>
+              navItem.type === "LINK" ? (
+                <Link key={navItem.label + i} href={navItem.href || '/'} onClick={() => setIsMobileMenuOpen(false)}>
+                  {navItem.label}
                 </Link>
               ) : (
-                <div key={navItem.text + i}>
-                  <div className='font-semibold'>{navItem.text}</div>
+                <div key={navItem.label + i}>
+                  <div className='font-semibold'>{navItem.label}</div>
                   <div className='pl-6 flex flex-col gap-2 mt-2 opacity-70'>
-                    {navItem.dropdownItems?.map((item, j) => (
-                      <Link key={item.text + j} href={item.href || '/'} onClick={() => setIsMobileMenuOpen(false)}>
-                        {item.text}
+                    {NavItems[2].dropdownItems?.map((item, j) => (
+                      <Link key={item.label + j} href={item.href || '/'} onClick={() => setIsMobileMenuOpen(false)}>
+                        {item.label}
                       </Link>
                     ))}
                   </div>

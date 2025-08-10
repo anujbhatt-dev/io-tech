@@ -1,9 +1,16 @@
-{
-    "landing": {
-      "hero": {
-        "heading": "Welcome to Our Platform",
-        "sub-heading": "Empowering your journey with innovative solutions."
-      }
-    }
+{    
+    "Appbar":{
+      "theme":{
+        "label":"theme",
+        "light":"light",
+        "dark":"dark",
+        "brown":"brown"
+      },
+      "lang":{
+        "en":"en",
+        "ar":"العربية"
+      },
+      "searchPlaceholder":"search"
+    }    
   }
   
