@@ -17,7 +17,7 @@ export default function Service({ data, locale }: { data : any, locale:"en"|"ar"
           onClick={() => router.back()}
           className="text-[#4B2615] text-sm sm:text-base py-6 flex gap-x-2 items-center cursor-pointer hover:underline"
         >
-          <IconArrowLeft className="w-6 h-6 sm:w-8 sm:h-8" /> Back
+          <IconArrowLeft className="w-6 h-6 sm:w-8 sm:h-8" /> {locale=="ar"?"خلفي":"Back"} 
         </button>
 
         {/* Heading */}
