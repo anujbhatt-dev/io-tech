@@ -2,14 +2,15 @@ import Search from '@/components/Search'
 import { fetchSearchData } from '@/utils/data'
 import React from 'react'
 
-type Props = {
-  searchParams: { v?: string }
-  params: { locale: 'en' | 'ar' }
-}
-
-export default async function Page({ searchParams, params }: Props) {
-  const queryV = searchParams.v ?? ''
-  const { locale } = params
+export default async function Page({
+  searchParams,
+  params,
+}: {
+  searchParams: Promise<{ v?: string }>
+  params: Promise<{ locale: 'en' | 'ar' }>
+}) {
+  const queryV = (await searchParams).v ?? ''
+  const { locale } = await params
   const data = await fetchSearchData({ v: queryV, locale })
 
   if (!data) return null
