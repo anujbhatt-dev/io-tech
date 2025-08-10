@@ -70,7 +70,7 @@ export default function Service({ data, locale }: { data : any, locale:"en"|"ar"
               </li>
             ),
             quote: ({ children }) => (
-              <blockquote className={`${locale==="ar"?" border-r-4 border-black/30  pr-4 sm:pr-6 items-end":" border-l-4 border-black/30 pl-4 sm:pl-6 items-start"} flex gap-x-2  my-4 bg-neutral-300`}>
+              <blockquote className={`${locale==="ar"?" border-r-4 border-black/30  pr-4 sm:pr-6 flex-row-reverse":" border-l-4 border-black/30 pl-4 sm:pl-6"} flex gap-x-2  my-4 py-2 bg-zinc-100`}>
                 <div>
                   <IconSquareFilled className="text-[#4B2615] h-[1rem] w-[1rem] sm:h-4 sm:w-4 mt-1 flex-no-shrink" />
                 </div>
