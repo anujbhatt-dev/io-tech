@@ -45,6 +45,19 @@ export const fetchTestimonialSectionData = async ({locale="en"}:{locale:"ar" | "
   }
 }
 
+export const fetchServiceData = async ({serviceSlug,locale="en"}:{serviceSlug:string,locale:"ar" | "en"}) =>{
+  try {
+    const query =`${strapiUrl}/services?locale=${locale}&filters[slug][$eq]=${serviceSlug}`
+    const res = await fetch(query) 
+    const data = await res.json(); 
+    console.log(query, data.data);
+    
+    return data.data[0];
+  } catch (error) {
+    console.log(error);      
+  }
+}
+
 
 export enum NavItemsType {
     LINK,

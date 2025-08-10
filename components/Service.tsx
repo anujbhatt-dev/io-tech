@@ -2,8 +2,9 @@
 import { useRouter } from "@/i18n/navigation";
 import { IconArrowLeft, IconSquareFilled } from "@tabler/icons-react";
 import React from "react";
+import { BlocksRenderer, type BlocksContent } from '@strapi/blocks-react-renderer';
 
-export default function Service({ data }: { data: any }) {
+export default function Service({ data }: { data : any }) {
     const router = useRouter();
   return (
     <div className="relative min-h-screen px-4 sm:px-8 lg:px-20 xl:px-40 my-[4rem] leading-relaxed">
@@ -21,72 +22,68 @@ export default function Service({ data }: { data: any }) {
 
         {/* Heading */}
         <h1 className="text-3xl sm:text-4xl lg:text-5xl font-medium text-[#4B2615]">
-          Legal Consultation Services
+          {data.label}
         </h1>
 
-        {/* Intro Paragraph */}
-        <p className="text-[#1E1E1E] my-6 sm:my-8 text-sm sm:text-base lg:text-lg text-justify">
-          Law Firm is one of the leading legal offices that offer exceptional
-          advisory services for both individuals and companies. Our mission is
-          to provide comprehensive and specialized legal support to meet our
-          clients' needs and offer the best legal solutions in various cases and
-          legal fields, we provide our legal consultations services as a follow:
-        </p>
+        {/* Below will be data.description  */}
+        <BlocksRenderer
+          content={data.description}
+          blocks={{
+            heading: ({ children, level }) => {
+              if (level === 1) {
+                return (
+                  <h1 className="text-3xl sm:text-4xl lg:text-5xl font-medium text-[#4B2615]">
+                    {children}
+                  </h1>
+                );
+              }
+              if (level === 2) {
+                return (
+                  <h2 className="text-lg sm:text-xl font-semibold text-[#4B2615] my-4 mt-8">
+                    {children}
+                  </h2>
+                );
+              }
+              if (level === 3) {
+                return (
+                  <h3 className="text-base sm:text-lg font-semibold text-[#4B2615] mt-4 mb-2">
+                    {children}
+                  </h3>
+                );
+              }
+              return <p>{children}</p>;
+            },
+            paragraph: ({ children }) => (
+              <p className="text-[#1E1E1E] my-6 sm:my-8 text-sm sm:text-base lg:text-lg text-justify">
+                {children}
+              </p>
+            ),
+            list: ({ children, format }) => {
+              if (format === "ordered") {
+                return <ol className="list-decimal ml-6 space-y-2 lg:pl-5">{children}</ol>;
+              }
+              return <ul className="list-disc ml-6 space-y-2 lg:pl-5">{children}</ul>;
+            },
+            "list-item": ({ children }) => (
+              <li className="text-[#1E1E1E]/70 flex-1 max-w-3xl text-sm sm:text-base">
+                {children}
+              </li>
+            ),
+            quote: ({ children }) => (
+              <blockquote className="flex items-start gap-x-2 border-l-4 border-black/30 pl-4 sm:pl-6 my-4">
+                <IconSquareFilled className="text-[#4B2615] h-[1rem] w-[1rem] sm:h-4 sm:w-4 mt-1 flex-no-shrink" />
+                <div>
+                {children}
+                </div>
+              </blockquote>
+            ),
+          }}
+        />
 
-        {/* Section 1 */}
-        <div className="mt-6 sm:mt-8">
-          <h4 className="text-lg sm:text-xl font-semibold text-[#4B2615] mb-4">
-            General Legal Consultations
-          </h4>
-          <div className="flex items-start gap-x-2 border-l-4 border-black/30 pl-4 sm:pl-6">
-            <IconSquareFilled className="text-[#4B2615] h-3 w-3 sm:h-4 sm:w-4 mt-1" />
-            <p className="text-[#1E1E1E] flex-1 max-w-3xl text-sm sm:text-base">
-              At Law Firm, we provide comprehensive legal consultations covering
-              all legal aspects that our clients may encounter in their daily
-              lives or business activities. Our goal is to offer accurate legal
-              advice based on a deep understanding of local and international
-              laws.
-            </p>
-          </div>
+
+
+
         </div>
-
-        {/* Section 2 */}
-        <div className="mt-6 sm:mt-8">
-          <h4 className="text-lg sm:text-xl font-semibold text-[#4B2615] mb-4">
-            Corporate Legal Advisory
-          </h4>
-          <div className="flex items-start gap-x-2 border-l-4 border-black/30 pl-4 sm:pl-6">
-            <IconSquareFilled className="text-[#4B2615] h-3 w-3 sm:h-4 sm:w-4 mt-1" />
-            <p className="text-[#1E1E1E] flex-1 max-w-3xl text-sm sm:text-base">
-              We assist corporations in understanding and complying with
-              regulatory requirements, drafting contracts, and resolving
-              disputes, ensuring their operations remain legally sound.
-            </p>
-          </div>
-        </div>
-
-        {/* Section 3 */}
-        <div className="mt-6 sm:mt-8">
-          <h4 className="text-lg sm:text-xl font-semibold text-[#4B2615] mb-4">
-            Litigation Support
-          </h4>
-          <div className="flex items-start gap-x-2 border-l-4 border-black/30 pl-4 sm:pl-6">
-            <IconSquareFilled className="text-[#4B2615] h-3 w-3 sm:h-4 sm:w-4 mt-1" />
-            <p className="text-[#1E1E1E] flex-1 max-w-3xl text-sm sm:text-base">
-              Our team offers expert guidance and representation in court,
-              arbitration, and mediation, tailored to each client's specific
-              legal challenges.
-            </p>
-          </div>
-        </div>
-
-        {/* Closing Paragraph */}
-        <p className="text-[#1E1E1E] my-6 sm:my-10 text-sm sm:text-base lg:text-lg">
-          At Law Firm, we aim to provide the best legal services to ensure your
-          rights and offer effective legal solutions. Contact us today to
-          receive professional and comprehensive legal consultation.
-        </p>
-      </div>
     </div>
   );
 }
