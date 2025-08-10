@@ -3,6 +3,9 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useState } from 'react';
+import { SubscribeHandle } from '@/utils/action';
+import { strapiUrl } from '@/utils/data';
+import { toast } from 'sonner';
 
 export default function SubscribeForm({locale}:{locale:"en"|"ar"}) {
   const [successMessage, setSuccessMessage] = useState('');
@@ -21,20 +24,15 @@ export default function SubscribeForm({locale}:{locale:"en"|"ar"}) {
   const handleSubmit = async (values: typeof initialValues, { resetForm }: any) => {
     setSuccessMessage('');
     setErrorMessage('');
-
+    
     try {
-      const res = await fetch('/api/subscribe', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(values),
-      });
+      const res = await SubscribeHandle(values.email)
+      console.log("subscribed");
 
-      if (!res.ok) {
+      if (!res) {
         throw new Error('Subscription failed');
       }
-
+      toast.success("Subscribed!!")
       setSuccessMessage('Successfully subscribed!');
       resetForm();
     } catch (error: any) {
@@ -49,7 +47,7 @@ export default function SubscribeForm({locale}:{locale:"en"|"ar"}) {
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        <Form className='flex justify-between items-center relative w-[20rem] bg-black dark:bg-white brown:bg-white dark:text-black rounded-lg flex-wrap'>
+        <Form className='flex justify-between items-center relative lg:w-[20rem] bg-black dark:bg-white brown:bg-white dark:text-black rounded-lg flex-wrap'>
           <div>
             <Field
               name='email'
@@ -60,7 +58,7 @@ export default function SubscribeForm({locale}:{locale:"en"|"ar"}) {
             <ErrorMessage
               name='email'
               component='div'
-              className='text-sm text-red-600 mt-1'
+              className='text-sm text-red-600 mt-1 px-4'
             />
           </div>
 
@@ -72,7 +70,7 @@ export default function SubscribeForm({locale}:{locale:"en"|"ar"}) {
           </button>
 
           {successMessage && (
-              <div className='text-green-600 text-sm text-center'>{successMessage}</div>
+              <div className='text-green-600 text-sm text-center px-4'>{successMessage}</div>
             )}
           {errorMessage && (
               <div className='text-red-600 text-sm text-center px-4'>{errorMessage}</div>

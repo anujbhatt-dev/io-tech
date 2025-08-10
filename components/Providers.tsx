@@ -10,6 +10,7 @@ import { Provider as ReduxProvider } from 'react-redux'
 import { store } from '@/store/store'
 import ThemeInitializer from './ThemeInitializer'
 import Footer from './Footer'
+import { Toaster } from 'sonner';
 
 
 export default function Providers({ children,locale,messages }: { children: ReactNode, locale:'en' | 'ar',messages:any }) {
@@ -19,6 +20,7 @@ export default function Providers({ children,locale,messages }: { children: Reac
       <NextIntlClientProvider locale={locale} messages={messages}>
       <ThemeInitializer>
       <div className={dm_sans.className}>
+        <Toaster />
         <Appbar locale={locale}/>
         {children}
         <Footer locale={locale}/>

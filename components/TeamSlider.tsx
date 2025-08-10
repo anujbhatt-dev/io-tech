@@ -1,5 +1,6 @@
 "use client"
 
+import { Link } from '@/i18n/navigation'
 import { strapiMediaUrl } from '@/utils/data'
 import { IconBrandWhatsapp, IconMail, IconPhone, IconChevronCompactLeft, IconChevronCompactRight } from '@tabler/icons-react'
 import Image from 'next/image'
@@ -64,7 +65,7 @@ export default function TeamSlider({ members }: { members: Member[] }) {
   }, [members])
 
   return (
-    <div className="relative w-full lg:px-40">
+    <div className="relative w-full lg:px-20">
       <div className="relative">
         {/* left arrow */}
         {showLeft && (
@@ -109,12 +110,12 @@ export default function TeamSlider({ members }: { members: Member[] }) {
                 src={`${strapiMediaUrl}${member.imageUrl.url}`}
                 alt=""
               />
-              <p className="py-3 pb-2 font-bold text-xl">{member.name}</p>
+              <p className="py-3 pb-2 font-bold text-xl text-[#4e2618]">{member.name}</p>
               <p className="pb-3 text-lg text-neutral-500">{member.position}</p>
               <div className="flex justify-center items-center gap-4">
-                <IconBrandWhatsapp />
-                <IconPhone />
-                <IconMail />
+                <Link href={member.whatsapp} target='_blank' className={""}><IconBrandWhatsapp /></Link>
+                <Link href={"tel:"+member.whatsapp}  className={""}><IconPhone /></Link>
+                <Link href={"mailto:"+member.whatsapp} className={""}><IconMail /></Link>
               </div>
             </div>
           ))}

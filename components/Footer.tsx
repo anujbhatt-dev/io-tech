@@ -34,7 +34,7 @@ export default function Footer({locale}:{locale:"ar"|"en"}) {
     if(loading) return null
 
   return (
-    <div className='bg-white dark:bg-black brown:bg-[#4e2618] py-15 px-10 xl:px-30  z-50 text-black dark:text-white brown:text-white'>
+    <div className='bg-white dark:bg-black brown:bg-[#4e2618] py-15 px-4 xl:px-30  z-50 text-black dark:text-white brown:text-white'>
         <div className='flex  flex-col lg:flex-row justify-end lg:items-center gap-8'>
             <SubscribeForm locale={locale}/>
             <h3>
