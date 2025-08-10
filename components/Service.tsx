@@ -54,7 +54,7 @@ export default function Service({ data, locale }: { data : any, locale:"en"|"ar"
               return <p className="text-base sm:text-lg font-semibold text-[#4B2615] mt-4 mb-2">{children}</p>;
             },
             paragraph: ({ children }) => (
-              <p className="text-[#1E1E1E] my-6 sm:my-8 text-sm sm:text-base lg:text-lg text-justify">
+              <p className="text-[#1E1E1E] my-6 sm:my-8 text-sm sm:text-base lg:text-lg">
                 {children}
               </p>
             ),
