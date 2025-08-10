@@ -53,7 +53,7 @@ export default function SubscribeForm({locale}:{locale:"en"|"ar"}) {
               name='email'
               type='email'
               placeholder={locale==="en"?'Enter your email':"أدخل بريدك الإلكتروني"}
-              className='text-white dark:text-black brown:text-black w-full px-4 py-4 placeholder:text-white placeholder:dark:text-neutral-400 placeholder:brown:text-neutral-400'
+              className='text-white dark:text-black brown:text-black w-full px-4 py-4 placeholder:text-text-neutral-500 '
             />
           </div>
             <ErrorMessage
