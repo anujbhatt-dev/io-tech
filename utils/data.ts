@@ -27,6 +27,7 @@ export const fetchTeamSectionData = async ({locale="en"}:{locale:"ar" | "en"}) =
   try {
     const res = await fetch(`${strapiUrl}/team?locale=${locale}&populate[teamSection][populate][teamMembers][populate][imageUrl][fields][0]=alternativeText&populate[teamSection][populate][teamMembers][populate][imageUrl][fields][1]=url`) 
     const data = await res.json();
+    console.log(data.data.teamSection);
     
     return data.data.teamSection
   } catch (error) {

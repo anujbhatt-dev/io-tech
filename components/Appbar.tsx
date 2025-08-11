@@ -214,7 +214,7 @@ export default function Appbar({locale}:{locale:'en' | 'ar'}) {
             className='fixed top-0 right-0 h-full w-3/4 bg-white dark:bg-black brown:bg-[#4e2618] p-6 z-50 text-black dark:text-white brown:text-white flex flex-col gap-6 overflow-y-auto'
           >
             <div className='flex justify-end items-center gap-x-4 uppercase bg-neutral-100 brown:bg-[#74402d] dark:bg-neutral-900 px-4 py-1 rounded-full'>
-              <span className='text-lg font-bold'>Menu</span>
+              <span className='text-lg font-bold'>{locale==="ar"?"قائمة طعام":"Menu"}</span>
               <button onClick={() => setIsMobileMenuOpen(false)}>
                 <IconX size={24} />
               </button>
