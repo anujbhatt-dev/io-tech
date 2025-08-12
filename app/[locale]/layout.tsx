@@ -5,6 +5,7 @@ import {hasLocale} from 'next-intl';
 import {notFound} from 'next/navigation';
 import {routing} from '@/i18n/routing';
 import Providers from "@/components/Providers";
+import { GoogleAnalytics } from "nextjs-google-analytics";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -44,6 +45,7 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased  ${locale==="ar" && "text-right"}`}
       >
+        <GoogleAnalytics trackPageViews gaMeasurementId='G-63NP5CQ8DZ'/>
         <Providers locale={locale} messages={messages}>
           {children}
         </Providers>

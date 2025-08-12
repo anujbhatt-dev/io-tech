@@ -24,6 +24,7 @@ export default function Providers({ children,locale,messages }: { children: Reac
         <Appbar locale={locale}/>
         {children}
         <Footer locale={locale}/>
+        
       </div>
       </ThemeInitializer>
       </NextIntlClientProvider>
