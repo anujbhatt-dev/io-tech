@@ -51,7 +51,7 @@ export default function ThemeInitializer({ children }: { children: React.ReactNo
             animate={{ opacity: [0.2, 1, 0.2] }}
             transition={{ repeat: Infinity, duration: 2 }}
           >
-            Loading theme...
+            Loading...
           </motion.div>
         </motion.div>
       ) : (
