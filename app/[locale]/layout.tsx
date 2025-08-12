@@ -41,7 +41,7 @@ export default async function RootLayout({
     <html
       className="dark"
       lang={locale}
-      dir={locale === "ar" ? "rtl" : "ltr"} // ✅ fixed RTL typo
+      dir={locale === "ar" ? "" : "ltr"} // ✅ fixed RTL typo
       suppressHydrationWarning
     >
       <body
